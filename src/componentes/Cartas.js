@@ -6,6 +6,12 @@ export default class Cartas extends Component
     //Calcular el posicionamiento de cada carta
     posicionamiento = (array)=>
     {
+        var arrayColores = [];
+
+        for(var i = 0; i <= array.length; i++)
+        {
+            arrayColores[i] = Math.floor((Math.random() * 9) + 1)
+        }
         setInterval(()=>{
 
             var matriz = [];// matriz
@@ -84,9 +90,12 @@ export default class Cartas extends Component
                         {
                             //Sumamos el ancho de la carta
                             //console.log(array[contador]['props']['id'])
+                            
+                            
                             var elemento = <Elementos Titulo={array[contador]['props']['Titulo']}
                             Escritura={array[contador]['props']['Escritura']} id={array[contador]['props']['id']}
-                            top={matriz[[filas, columnas]]['top']} left={matriz[[filas, columnas]]['left']}/>
+                            top={matriz[[filas, columnas]]['top']} left={matriz[[filas, columnas]]['left']}
+                            divClass={'color' + arrayColores[contador]}/>
                             elementos.push(elemento);
                             sumatoriaWidth+= document.getElementById(array[contador]['props']['id']).offsetWidth;
                         }
