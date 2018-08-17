@@ -1,0 +1,57 @@
+
+html
+{
+  overflow-x: hidden;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+ul{
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.cartas{
+  list-style: none;
+  width: auto;
+  height: auto;
+  position: absolute;
+  max-width: 300px;
+  min-width: 135px;
+}
+
+.cartas div
+{
+  border-style: solid;
+  width: auto;
+  height: auto;
+}
+
+.cartas div h1
+{
+  text-align: center;
+}
+
+.cartas div p
+{
+  text-align: justify;
+}
+
+@media only screen and (max-width: 400px) {
+  .cartas{
+    width: 100%;
+    max-width: none;
+  }
+  .cartas div
+  {
+    max-width: none;
+  }
+  ul
+  {
+    display: block;
+    width: 100%;
+  }
+}
