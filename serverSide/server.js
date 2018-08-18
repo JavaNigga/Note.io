@@ -35,6 +35,13 @@ app.post('/traerCartas', (req, res)=>{
     })
 })
 
+app.post('/crearCarta', (req, res)=>{
+    var losDatos = url.parse(req.url, true).query.losDatos;
+    funciones.crearCarta(losDatos, function(resultado){
+        res.send(resultado)
+    })
+})
+
 app.listen(ports, ()=>{
     console.log('corriendo... ' + ports)
 })

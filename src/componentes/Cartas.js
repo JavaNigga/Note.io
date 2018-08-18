@@ -25,12 +25,13 @@ export default class Cartas extends Component
             var sumatoriaWidth = 0;//Sumatoria de los anchos de cada carta en la fila
             var contador = 0;//contador para saber cuando parar el bucle
             var marginPantalla = 0;
-            if(pantalla >= 1224)
+            if(pantalla > 1300)
             {
                 marginPantalla = (pantalla * 0.10)
-            }else if(pantalla < 1224 && pantalla >= 1000)
+            }else if(pantalla <= 1300 && pantalla >= 1000)
             {
                 marginPantalla = (pantalla * 0.2)
+                console.log('pantalla 1224')
             }else if(pantalla < 1000 && pantalla >= 320)
             {
                 marginPantalla = (pantalla * 0.2)
@@ -131,7 +132,7 @@ export default class Cartas extends Component
     }
 
     traerCartas = ()=>{
-        var url = 'http://localhost:8080/traerCartas'
+        var url = 'https://noteio-server.firebaseapp.com/traerCartas'
         var connexion = new XMLHttpRequest();
         connexion.open('POST', url, true);
         connexion.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -140,7 +141,7 @@ export default class Cartas extends Component
         connexion.onreadystatechange = ()=>{
           if(connexion.readyState == 4 && connexion.status !== 404)
           {
-            this.formarCartas(JSON.parse(connexion.responseText))
+            this.formarCartas(JSON.parse(connexion.response))
           }
         }
       }
