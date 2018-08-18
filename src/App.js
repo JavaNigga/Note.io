@@ -61,6 +61,8 @@ class App extends Component {
             </div>
           </div>
         </div>
+        <p id='parrafo'><strong>VERSION: BETA-0.1.0<br/>
+        GITHUB: https://github.com/JavaNigga/Note.io</strong></p>
       </div>
       
     );
