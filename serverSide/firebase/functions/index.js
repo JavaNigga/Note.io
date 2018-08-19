@@ -8,7 +8,7 @@ var funciones = require('./funciones')
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'https://noteio.tk');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -23,6 +23,16 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+var RateLimit = require('express-rate-limit');
+ 
+var limiter = new RateLimit({
+  windowMs: 10*60*1000, // 10 minutes
+  max: 10, // limit each IP to 10 requests per windowMs
+  delayMs: 0 // disable delaying - full speed until the max limit is reached
+});
+ 
+//  apply to all requests
+app.use('/crearCarta',limiter);
 
 app.get('/', (req, res)=>{
     funciones.prueba();

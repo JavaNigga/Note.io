@@ -19,7 +19,7 @@ class App extends Component {
               document.getElementById('bg-dialogo').style.display = 'none';
             }} src={require('./close.png')}/>
             <div style={{width: '100%'}}>
-              <input id='titulo' maxLength={50} placeholder='TITULO(50 max)'/>
+              <input id='titulo' maxLength={35} placeholder='TITULO(35 max)'/>
             </div>
             
             <textarea id='escritura' maxLength={500} placeholder='ESCRIBE LO QUE QUIERAS!'/>
@@ -47,6 +47,12 @@ class App extends Component {
                     if(connexion.readyState == 4 && connexion.status !== 404)
                     {
                       window.location.reload(true);
+                    }else
+                    {
+                      if(connexion.status == 429 && connexion.response == 'Too many requests, please try again later.')
+                      {
+                        alert('Has escrito demasiadas notas en muy poco tiempo!\nEscribe algo nuevo dentro de poco :D')
+                      }
                     }
                   }
                 }
@@ -62,7 +68,7 @@ class App extends Component {
           </div>
         </div>
         <p id='parrafo'><strong>VERSION: BETA-0.1.0<br/>
-        GITHUB: https://github.com/JavaNigga/Note.io</strong></p>
+        GITHUB: https://github.com/MerliMejia/Note.io</strong></p>
       </div>
       
     );

@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "express": "^4.16.3",
+    "express-limiter": "^1.6.1",
+    "express-rate-limit": "^2.12.2",
     "firebase-admin": "~6.0.0",
-    "firebase-functions": "^2.0.3"
+    "firebase-functions": "^2.0.3",
+    "request-rate-limiter": "^1.0.2"
   },
   "private": true
 }
