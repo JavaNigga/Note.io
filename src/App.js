@@ -19,7 +19,7 @@ class App extends Component {
               document.getElementById('bg-dialogo').style.display = 'none';
             }} src={require('./close.png')}/>
             <div style={{width: '100%'}}>
-              <input id='titulo' maxLength={35} placeholder='TITULO(35 max)'/>
+              <input id='titulo' maxLength={50} placeholder='TITULO(50 max)'/>
             </div>
             
             <textarea id='escritura' maxLength={500} placeholder='ESCRIBE LO QUE QUIERAS!'/>
