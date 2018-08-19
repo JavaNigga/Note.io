@@ -1,4 +1,8 @@
 
+*:focus {
+  outline: 0;
+  outline: none;
+  }
 html
 {
   overflow-x: hidden;
@@ -28,6 +32,7 @@ p
   font-family: 'Roboto Mono', monospace;
   margin: 10px;
   color: white;
+  display: table;
 }
 
 .cartas{
@@ -39,6 +44,8 @@ p
   min-width: 135px;
   margin: 20px;
   transition: all, 0.2s;
+  outline: 0;
+  outline: none;
 }
 
 .cartas div
@@ -51,14 +58,21 @@ p
   border-radius: 10px;
   transition: all, 0.2s;
   outline: none;
+  display: table;
+  outline: 0;
+  outline: none;
 }
 
 .cartas div:hover
 {
+  outline: 0;
+outline: none;
   transform: translateY(-10px);
 }
 .cartas:hover
 {
+  outline: 0;
+  outline: none;
   z-index: 100;
 }
 
@@ -274,24 +288,63 @@ textarea
   color: rgb(58, 58, 58);
 }
 
-@media only screen and (max-height: 1280px)
-{
-  #carta-agregar{
-    height: 60%;
-    margin-bottom: 100px;
-    top: 0px;
-    margin-top: 200px;
+@media only screen and (max-width: 800px) {
+  #carta-agregar
+  {
+    width: 70%;
   }
 }
-@media only screen and (max-height: 1024px)
-{
-  #carta-agregar{
-    margin-bottom: 100px;
-    top: 100px;
-    margin: auto;
-    margin-top: 20px;
-    height: 60%;
+
+@media only screen and (max-width: 500px) {
+  #carta-agregar
+  {
+    width: 100%;
+    border-radius: 0px;
   }
+  #btn_agregar
+  {
+    margin: 10px;
+  }
+  .cartas
+  {
+    margin: 0;
+    width: 100%;
+    max-width: none;
+    min-width: none;
+  }
+  .cartas div
+  {
+    width: 100%;
+    max-width: none;
+    min-width: none;
+    border-radius: 0px;
+  }
+  .cartas div p{
+    text-align: left;
+    margin-left: 2%;
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-height: 1440px)
+{
+  #carta-agregar
+  {
+    height: 50%;
+    top: 10%;
+    margin-top: 0;
+  }
+}
+
+@media only screen and (max-height: 1200px)
+{
+  #carta-agregar
+  {
+    height: 60%;
+    top: 15%;
+    margin-top: 0;
+  }
+
   textarea
   {
     height: 50%;
@@ -300,150 +353,38 @@ textarea
 
 @media only screen and (max-height: 800px)
 {
-  #carta-agregar{
-    margin-bottom: 100px;
-    top: 50px;
-    margin: auto;
-    margin-top: 20px;
-    height: 60%;
+  #carta-agregar
+  {
+    height: 75%;
+    top: 10%;
+    margin-top: 0;
   }
+
   textarea
   {
     height: 45%;
   }
 }
 
-@media only screen and (max-height: 500px)
+@media only screen and (max-height: 600px)
 {
-  #carta-agregar{
-    width: 100%;
+  #carta-agregar
+  {
     height: 100%;
-    margin: 0;
-    max-height: none;
-    top: 0;
-    border-radius: 0px;
-  }
-}
-
-@media only screen and (max-height: 384px)
-{
-  #carta-agregar{
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    max-height: none;
-    top: 0;
-    border-radius: 0px;
+    top: 0%;
+    margin-top: 0;
   }
 
   textarea
   {
-    height: 35%;
-  }
-  
-  #btn-aceptar
-  {
-    margin-top: 20px;
+    height: 40%;
   }
 }
 
-@media only screen and (max-width: 1024px)
+@media only screen and (max-height: 400px)
 {
-  #carta-agregar{
-    width: 70%;
-  }
-  html
-  {
-    zoom: 1;
-  }
-}
-
-@media only screen and (max-width: 700px){
-  .cartas{
-    margin: 0px;
-  }
-  html
-  {
-    zoom: 1;
-  }
-}
-
-@media only screen and (max-width: 700px)
-{
-  #btn_agregar
-  {
-    height: 60px;
-    width: 60px;
-    margin: 10px;
-  }
-  #btn_agregar img
-  {
-    height: 60px;
-  }
-  html
-  {
-    zoom: 1;
-  }
-}
-
-@media only screen and (max-width: 500px)
-{
-  .cartas{
-    width: 100%;
-    max-width: none;
-    margin: 0px;
-    border-radius: 0px;
-  }
-  .cartas div
-  {
-    max-width: none;
-    border-radius: 0px;
-  }
-  #carta-agregar{
-    width: 100%;
-    max-height: 500px;
-  }
   textarea
   {
-    height: 45%;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  .cartas{
-    width: 100%;
-    max-width: none;
-    margin: 0px;
-    
-  }
-  .cartas div
-  {
-    max-width: none;
-    border-radius: 0px;
-  }
-  ul
-  {
-    display: block;
-    width: 100%;
-  }
-  #btn_agregar
-  {
-    height: 50px;
-    width: 50px;
-    margin: 10px;
-  }
-  #btn_agregar img
-  {
-    height: 50px;
-  }
-  #carta-agregar{
-    width: 100%;
-    height: 80%;
-    max-height: 80%;
-    margin: 0;
-  }
-  html
-  {
-    zoom: 1;
+    height: 20%;
   }
 }

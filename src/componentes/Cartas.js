@@ -153,7 +153,8 @@ export default class Cartas extends Component
                 //console.log('pantalla 1224')
             }else if(pantalla < 1000 && pantalla >= 320)
             {
-                marginPantalla = (pantalla * 0.2)
+                marginPantalla = (pantalla * 0.4)
+                console.log('320')
             }
             //console.log(pantalla)
 
