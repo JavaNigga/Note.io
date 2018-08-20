@@ -37,7 +37,7 @@ class App extends Component {
                     'titulo': titulo
                   }
   
-                  var url = 'https://noteio-server.firebaseapp.com/crearCarta?losDatos=' + encodeURIComponent(JSON.stringify(datos))
+                  var url = 'https://noteioserver.herokuapp.com/crearCarta?losDatos=' + encodeURIComponent(JSON.stringify(datos))
                   var connexion = new XMLHttpRequest();
                   connexion.open('POST', url, true);
                   connexion.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

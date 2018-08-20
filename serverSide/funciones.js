@@ -2,7 +2,7 @@ var admin = require("firebase-admin");
 var serviceAccount = require("./noteio-595fd-firebase-adminsdk-hmab5-c130884487.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "FAKE DTB URL"
+  databaseURL: "https://noteio-595fd.firebaseio.com"
 });
 
 var db = admin.database();

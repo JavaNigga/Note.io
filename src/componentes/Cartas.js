@@ -126,6 +126,7 @@ export default class Cartas extends Component
         }
         //console.log(matriz);
         this.setState({lasCartas: elementos})
+        this.setState({poder: true})
         if(window.intervalo !== undefined)
         {
             console.log('se quito el intervalo')
@@ -246,13 +247,13 @@ export default class Cartas extends Component
             array.push(elemento);
             contador++;
         }
-
         this.setState({lasCartas: array.reverse()});
         this.posicionamiento(array, cambioColor, color);
+        
     }
 
     traerCartas = ()=>{
-        var url = 'https://noteio-server.firebaseapp.com/traerCartas'
+        var url = 'https://noteioserver.herokuapp.com/traerCartas'
         var connexion = new XMLHttpRequest();
         connexion.open('POST', url, true);
         connexion.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -268,25 +269,28 @@ export default class Cartas extends Component
               setInterval(()=>{
                 //console.log('Cambio!');
 
-                var url = 'https://noteio-server.firebaseapp.com/traerCartas'
-                var connexion = new XMLHttpRequest();
-                connexion.open('POST', url, true);
-                connexion.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                connexion.send();
+                if(this.state.poder == true){
+                    var url = 'https://noteioserver.herokuapp.com/traerCartasMejor'
+                    var connexion = new XMLHttpRequest();
+                    connexion.open('POST', url, true);
+                    connexion.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    connexion.send();
 
-                connexion.onreadystatechange = ()=>{
-                    if(connexion.readyState == 4 && connexion.status !== 404)
-                    {
-                        if(JSON.stringify(JSON.parse(connexion.response)) !== JSON.stringify(elObjeto))
+                    connexion.onreadystatechange = ()=>{
+                        if(connexion.readyState == 4 && connexion.status !== 404)
                         {
-                            elObjeto = JSON.parse(connexion.response);
-                            this.formarCartas(elObjeto, false, Math.floor((Math.random() * 9) + 1));
-                            //console.log('ELOBJETO: ' + JSON.stringify(elObjeto) + "  REQUEST: " + JSON.stringify(JSON.parse(connexion.response)));
-                            
+                            if(JSON.stringify(JSON.parse(connexion.response)) !== JSON.stringify(elObjeto))
+                            {
+                                elObjeto = JSON.parse(connexion.response);
+                                this.formarCartas(elObjeto, false, Math.floor((Math.random() * 9) + 1));
+                                //console.log('ELOBJETO: ' + JSON.stringify(elObjeto) + "  REQUEST: " + JSON.stringify(JSON.parse(connexion.response)));
+                                
+                            }
+                            connexion.onreadystatechange = null;
                         }
-                        connexion.onreadystatechange = null;
                     }
                 }
+                
 
               }, 5000);
 
@@ -302,7 +306,7 @@ export default class Cartas extends Component
         this.traerCartas = this.traerCartas.bind(this);
         this.formarCartas = this.formarCartas.bind(this);
         this.posicionamiento = this.posicionamiento.bind(this);
-        this.state = {lasCartas: ""}
+        this.state = {lasCartas: "", poder: false}
         
       }
 
