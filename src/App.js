@@ -37,7 +37,7 @@ class App extends Component {
                     'titulo': titulo
                   }
   
-                  var url = 'https://noteioserver.herokuapp.com/crearCarta?losDatos=' + encodeURIComponent(JSON.stringify(datos))
+                  var url = 'https://noteioserver.herokuapp.com/CC?losDatos=' + encodeURIComponent(JSON.stringify(datos))
                   var connexion = new XMLHttpRequest();
                   connexion.open('POST', url, true);
                   connexion.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -46,7 +46,9 @@ class App extends Component {
                   connexion.onreadystatechange = ()=>{
                     if(connexion.readyState == 4 && connexion.status !== 404)
                     {
-                      window.location.reload(true);
+                      document.getElementById('bg-dialogo').style.display = 'none';
+                      var titulo = document.getElementById('titulo').value = "";
+                      var escritura = document.getElementById('escritura').value = "";
                     }else
                     {
                       if(connexion.status == 429 && connexion.response == 'Too many requests, please try again later.')
