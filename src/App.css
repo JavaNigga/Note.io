@@ -14,6 +14,7 @@ body{
   margin: 0;
   padding: 0;
   background-color: #eceff1;
+  font-family: 'Roboto', sans-serif;
 }
 
 ul{
@@ -43,7 +44,7 @@ p
   max-width: 300px;
   min-width: 135px;
   margin: 20px;
-  transition: all, 0.2s;
+  transition: all, 0.5s;
   outline: 0;
   outline: none;
 }
@@ -162,6 +163,7 @@ outline: none;
   transition: all, 0.2s;
   cursor: pointer;
 }
+
 #btn_agregar img
 {
   height: 70px;

@@ -3,6 +3,36 @@ import Elementos from './Elementos'
 
 export default class Cartas extends Component
 {
+
+    infiniteScroll = ()=>{
+        var body = document.body,
+            html = document.documentElement;
+        var antesDeAgregar = Math.max( body.scrollHeight, body.offsetHeight, 
+            html.clientHeight, html.scrollHeight, html.offsetHeight );
+        window.onscroll = (ev)=>
+        {
+            var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                            html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+            //console.log(this.state.mostrando)
+            if(document.documentElement.scrollTop == 0)
+            {
+                //console.log('TOP')
+                antesDeAgregar = Math.max( body.scrollHeight, body.offsetHeight, 
+                    html.clientHeight, html.scrollHeight, html.offsetHeight );
+                this.state.contadorEscroll = 0;
+
+                this.setState({array100: this.state.arrayTodos.slice(0, 100), mostrando: 100})
+            }else if(document.documentElement.scrollTop + 1000 >= height && this.state.contadorEscroll == 0)
+            {
+                this.state.contadorEscroll++;
+                var array100 = this.state.array100;
+                this.setState({array100: this.state.arrayTodos.slice(0, array100.length + 50)})
+                this.setState({escroleo: true})
+            }
+        };
+    }
+
     //Calcular el posicionamiento de cada carta
     posicionamiento = (array, cambioColor, color)=>
     {
@@ -15,13 +45,13 @@ export default class Cartas extends Component
                 arrayColores[i] = Math.floor((Math.random() * 9) + 1)
                 window.localStorage.colores = arrayColores.toString()
             }
-            console.log('CAMBIO COLOR ' + "ALMACENADO: " + window.localStorage.colores)
+           // console.log('CAMBIO COLOR ' + "ALMACENADO: " + window.localStorage.colores)
         }else
         {
             arrayColores = window.localStorage.colores.split(',');
             arrayColores.push(color);
             window.localStorage.colores = arrayColores.toString()
-            console.log('NO COLOR! ' + color + 'ALMACENADO: ' + window.localStorage.colores)
+            //console.log('NO COLOR! ' + color + 'ALMACENADO: ' + window.localStorage.colores)
 
         }
 
@@ -125,14 +155,19 @@ export default class Cartas extends Component
             
         }
         //console.log(matriz);
-        this.setState({lasCartas: elementos})
+        this.setState({arrayTodos: elementos})
+        this.setState({mostrando: 100})
+        this.setState({array100: this.state.arrayTodos.slice(0, 100)})
+        this.setState({lasCartas: this.state.array100})
         this.setState({poder: true})
+        this.infiniteScroll();
         if(window.intervalo !== undefined)
         {
-            console.log('se quito el intervalo')
+            //console.log('se quito el intervalo')
             window.clearInterval(window.intervalo);
         }
 
+        var contadorIntervalo = 0
         window.intervalo = setInterval(()=>{
             var matriz = [];// matriz
             var altos = [];
@@ -155,7 +190,7 @@ export default class Cartas extends Component
             }else if(pantalla < 1000 && pantalla >= 320)
             {
                 marginPantalla = (pantalla * 0.4)
-                console.log('320')
+                //console.log('320')
             }
             //console.log(pantalla)
 
@@ -200,9 +235,10 @@ export default class Cartas extends Component
 
                             if(contador < array.length)
                             {
-                                altos[columnas] += document.getElementById(array[contador]['props']['id']).offsetHeight;
-                                /*console.log('FILA: ' + filas + "  ALTOS: " + altos + "  COLUMNAS: " + columnas + "  CONTADOR: " + 
-                                contador + "  HEIGTH: " + document.getElementById(array[contador]['props']['id']).offsetHeight)*/
+                                if(document.getElementById(array[contador]['props']['id']) !== null)
+                                {
+                                    altos[columnas] += document.getElementById(array[contador]['props']['id']).offsetHeight;
+                                }  
                             }
                             
                             
@@ -219,7 +255,11 @@ export default class Cartas extends Component
                             top={matriz[[filas, columnas]]['top']} left={matriz[[filas, columnas]]['left']}
                             divClass={'color' + arrayColores[contador]}/>
                             elementos.push(elemento);
-                            sumatoriaWidth+= document.getElementById(array[contador]['props']['id']).offsetWidth;
+                            if(document.getElementById(array[contador]['props']['id']) !== null)
+                            {
+                                sumatoriaWidth+= document.getElementById(array[contador]['props']['id']).offsetWidth;
+                            }
+                            
                         }
                         
                         
@@ -232,8 +272,29 @@ export default class Cartas extends Component
                 
             }
             //console.log(matriz);
-            this.setState({lasCartas: elementos})
-        }, 1000)
+
+            //console.log(this.state.escroleo)
+
+            if(this.state.escroleo == true)
+            {
+                //console.log(this.state.lasCartas);
+                this.setState({lasCartas: this.state.array100})
+                this.setState({mostrando: this.state.array100.length})
+                this.state.escroleo = false;
+                //console.log(this.state.lasCartas);
+            }else
+            {
+                this.setState({arrayTodos: elementos})
+                this.setState({lasCartas: this.state.arrayTodos.slice(0, this.state.mostrando)}) 
+                if(contadorIntervalo >= 6)
+                {
+                    this.state.contadorEscroll = 0;
+                }
+            }
+
+            contadorIntervalo ++;
+            
+        }, 500)
 
     }
 
@@ -253,7 +314,7 @@ export default class Cartas extends Component
     }
 
     traerCartas = ()=>{
-        var url = 'https://noteioserver.herokuapp.com/traerCartas'
+        var url = 'https://noteio.tk/traerCartas'
         var connexion = new XMLHttpRequest();
         connexion.open('POST', url, true);
         connexion.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -270,7 +331,7 @@ export default class Cartas extends Component
                 //console.log('Cambio!');
 
                 if(this.state.poder == true){
-                    var url = 'https://noteioserver.herokuapp.com/traerCartasMejor'
+                    var url = 'https://noteio.tk/traerCartasMejor'
                     var connexion = new XMLHttpRequest();
                     connexion.open('POST', url, true);
                     connexion.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -306,8 +367,9 @@ export default class Cartas extends Component
         this.traerCartas = this.traerCartas.bind(this);
         this.formarCartas = this.formarCartas.bind(this);
         this.posicionamiento = this.posicionamiento.bind(this);
-        this.state = {lasCartas: "", poder: false}
-        
+        this.state = {lasCartas: "", poder: false, arrayTodos: [], array100: [], 
+        escroleo: false, mostrando: 0, contadorEscroll: 0}
+        this.infiniteScroll = this.infiniteScroll.bind(this)
       }
 
       render()

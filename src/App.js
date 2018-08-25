@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import Cartas from './componentes/Cartas'
+import swal from 'sweetalert'
 
 class App extends Component {
 
   render() {
     return (
-      <div>
+      <div id='contenedor'>
         <Cartas/>
         <div onClick={()=>{
           document.getElementById('bg-dialogo').style.display = 'block'
@@ -30,14 +31,34 @@ class App extends Component {
 
               if(titulo.length >= 4 && escritura.length >= 10){
 
-                if(window.confirm('SEGURO QUE DESEA AGREGAR ESTA  NOTA?\n Una vez agregada esta nota no hay manera de borrarla'))
-                {
+                swal({
+                  title: "SEGURO QUE DESEA AGREGAR ESTA  NOTA?",
+                  text: "Una vez agregada esta nota no hay manera de borrarla",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+                })
+                .then((willDelete) => {
+                  if (willDelete) {
+                    var arrayTitulo = titulo.split(' ');
+                  var arraEscritura = escritura.split(' ');
+                  arrayTitulo = arrayTitulo.filter(function(item){
+                    return item !== ''
+                  })
+                  arraEscritura = arraEscritura.filter(function(item){
+                    return item !== ''
+                  })
+                  titulo = arrayTitulo.join(' ')
+                  escritura = arraEscritura.join(' ')
+
+                  //console.log(titulo + "\n" + escritura)
                   var datos = {
                     'escritura': escritura,
                     'titulo': titulo
                   }
-  
-                  var url = 'https://noteioserver.herokuapp.com/CC?losDatos=' + encodeURIComponent(JSON.stringify(datos))
+
+                  
+                  var url = 'https://noteio.tk/CC?losDatos=' + encodeURIComponent(JSON.stringify(datos))
                   var connexion = new XMLHttpRequest();
                   connexion.open('POST', url, true);
                   connexion.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -51,13 +72,14 @@ class App extends Component {
                       var escritura = document.getElementById('escritura').value = "";
                     }else
                     {
-                      if(connexion.status == 429 && connexion.response == 'Too many requests, please try again later.')
+                      if(connexion.status == 429 && connexion.response == 'Losiento, demasiadas request')
                       {
-                        alert('Has escrito demasiadas notas en muy poco tiempo!\nEscribe algo nuevo dentro de poco :D')
+                        alert('TE ESTAS DIVIRTIENDO MUCHISIMO NO?\nHAS ESCRITO MUCHAS CARTAS EN UNA CANTIDAD MUY CORTA DE TIEMPO, ESPERA UN POCO HASTA QUE PUEDAS ESCRIBIR OTRA CARTA :)')
                       }
                     }
                   }
-                }
+                  }
+                });
                 
               }else
               {
