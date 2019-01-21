@@ -12,4 +12,4 @@ NOTEIO was created with the intention of practicing Reactjs and as a personal pr
 ### Add cards
 ![Add cards](https://github.com/JavaNigga/Note.io/blob/master/Galery/crearcarta.gif?raw=true)
 
-# [LINK TO THE WEB APP](https://noteioapp.herokuapp.com/)
+# [LINK TO THE WEB APP](http://noteio.tk/)
